@@ -1,18 +1,21 @@
 package sprint3_1.test;
 
+import static org.junit.Assert.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import sprint3_1.product.TicTacToeGUI;
-import sprint3_1.product.SimpleGame;
+import sprint3_1.product.GeneralGame;
+import sprint3_1.product.Game.GameState;
 
-public class TestGameGUI {
-	private SimpleGame game;
-	
+public class TestCompleteGeneralGame {
+
+	private GeneralGame game;
 	@Before
 	public void setUp() throws Exception {
-		game = new SimpleGame();
+		game = new GeneralGame();
 	}
 
 	@After
@@ -20,7 +23,13 @@ public class TestGameGUI {
 	}
 
 	@Test
-	public void testEmptyBoard() {	
+	public void test() {
+		game.makeMove(0, 0);
+		game.makeMove(1, 1);		
+		game.makeMove(0, 1);
+		game.makeMove(1, 0);		
+		game.makeMove(0, 2);
+		assertEquals("", game.getGameState(), GameState.S_WON); 
 		new TicTacToeGUI(game); 
 		try {
 			Thread.sleep(2000);
@@ -29,15 +38,4 @@ public class TestGameGUI {
 		}
 	}
 
-	@Test
-	public void test() {
-		game.makeMove(0, 0);
-		game.makeMove(1, 1);		
-		new TicTacToeGUI(game); 
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
 }

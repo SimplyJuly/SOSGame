@@ -6,12 +6,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sprint3_1.product.TicTacToeGame;
-import sprint3_1.product.TicTacToeGame.Cell;
+import sprint3_1.product.SimpleGame;
+import sprint3_1.product.Game.Cell;
 
 public class TestEmptyBoard {
 
-	private TicTacToeGame game = new TicTacToeGame();
+	private SimpleGame game = new SimpleGame();
 
 	@Before
 	public void setUp() throws Exception {

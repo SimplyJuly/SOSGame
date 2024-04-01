@@ -5,8 +5,9 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import sprint3_1.product.TicTacToeGame.Cell;
-import sprint3_1.product.TicTacToeGame.GameState;
+import sprint3_1.product.Game.Cell;
+import sprint3_1.product.Game.GameState;
+
 
 /* 
  * The GUI code was originally written by 
@@ -35,16 +36,17 @@ public class TicTacToeGUI extends JFrame {
 	private JPanel gameOptions;
 	private JButton newGame;
 	private JLabel sos;
-	private JRadioButton generalGame;
-	private JRadioButton simpleGame;
+	private JRadioButton generalGameButton;
+	private JRadioButton simpleGameButton;
 	
 	private JPanel boardSizeSelection;
 	private JLabel boardSizeLabel;
 	private JTextField boardSizeInput;
 
-	private TicTacToeGame game;
+	private Game game;
+	private String gameMode = "Simple Game";
 
-	public TicTacToeGUI(TicTacToeGame game) {
+	public TicTacToeGUI(Game game) {
 		this.game = game;
 		setContentPane();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,6 +56,8 @@ public class TicTacToeGUI extends JFrame {
 	}
 	
 	private void setContentPane(){
+		game = new SimpleGame();
+		
 		gameBoardCanvas = new GameBoardCanvas();  
 		CANVAS_WIDTH = CELL_SIZE * game.getTotalRows();  
 		CANVAS_HEIGHT = (CELL_SIZE * game.getTotalColumns());
@@ -73,18 +77,18 @@ public class TicTacToeGUI extends JFrame {
 		
 		gameOptions = new JPanel();
 		sos = new JLabel("SOS");
-		simpleGame = new JRadioButton("Simple Game");
-		generalGame = new JRadioButton("General Game");
-		simpleGame.addActionListener(actionListener);
-		generalGame.addActionListener(actionListener);
+		simpleGameButton = new JRadioButton("Simple Game");
+		generalGameButton = new JRadioButton("General Game");
+		simpleGameButton.addActionListener(actionListener);
+		generalGameButton.addActionListener(actionListener);
 		gameOptions.add(sos);
-		gameOptions.add(simpleGame);
-		gameOptions.add(generalGame);
+		gameOptions.add(simpleGameButton);
+		gameOptions.add(generalGameButton);
 		
         ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(simpleGame);
-        buttonGroup.add(generalGame);
-        simpleGame.setSelected(true);
+        buttonGroup.add(simpleGameButton);
+        buttonGroup.add(generalGameButton);
+        simpleGameButton.setSelected(true);
 
 		gameSettings = new JPanel();
 		gameSettings.setLayout(new BoxLayout(gameSettings, BoxLayout.Y_AXIS));
@@ -116,8 +120,15 @@ public class TicTacToeGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             AbstractButton abstractButton = (AbstractButton) e.getSource();
-            game.updateGameMode(abstractButton.getText());
-            System.out.println("Selected: " + game.getGameMode());
+            gameMode = abstractButton.getText();
+            System.out.println("Selected: " + gameMode);
+            
+            if (gameMode.equals("Simple Game")) {
+                game = new SimpleGame();
+            } else if (gameMode.equals("General Game")) {
+                game = new GeneralGame();
+            }
+            
         }
     };
     
@@ -132,8 +143,11 @@ public class TicTacToeGUI extends JFrame {
 						game.makeMove(rowSelected, colSelected);
 					} else {
 						game.resetGame(); 
+						System.out.println("Line 136, TicTacToeGUI: where the game resets");
 					}
 					repaint();  
+					printStatusBar();
+//					System.out.println("Line 149, TicTacToeGUI: repaint has been run");
 				}
 			});
 		}
@@ -192,9 +206,9 @@ public class TicTacToeGUI extends JFrame {
 			if (game.getGameState() == GameState.PLAYING) {
 				gameStatusBar.setForeground(Color.BLACK);
 				if (game.getTurn() == 'S') {
-					gameStatusBar.setText(game.getGameMode() + ": S's Turn");
+					gameStatusBar.setText(gameMode + ": S's Turn");
 				} else {
-					gameStatusBar.setText(game.getGameMode() + ": O's Turn");
+					gameStatusBar.setText(gameMode + ": O's Turn");
 				}
 			} else if (game.getGameState() == GameState.DRAW) {
 				gameStatusBar.setForeground(Color.RED);
@@ -213,7 +227,7 @@ public class TicTacToeGUI extends JFrame {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new TicTacToeGUI(new TicTacToeGame()); 
+				new TicTacToeGUI(new SimpleGame()); 
 			}
 		});
 	}

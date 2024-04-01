@@ -1,13 +1,13 @@
 package sprint3_1.product;
 
 import java.util.Scanner;
-import sprint3_1.product.TicTacToeGame.Cell;
-import sprint3_1.product.TicTacToeGame.GameState;
+import sprint3_1.product.Game.Cell;
+import sprint3_1.product.Game.GameState;
 
 public class TicTacToeConsole {
-	private TicTacToeGame game;
+	private Game game;
 
-	public TicTacToeConsole(TicTacToeGame board) {
+	public TicTacToeConsole(Game board) {
 		this.game = board;
 	}
 
@@ -68,6 +68,6 @@ public class TicTacToeConsole {
 	}
 
 	public static void main(String[] args) {
-		new TicTacToeConsole(new TicTacToeGame()).play();
+		new TicTacToeConsole(new SimpleGame()).play();
 	}
 }

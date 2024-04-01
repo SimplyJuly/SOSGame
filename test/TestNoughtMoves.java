@@ -5,16 +5,16 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import sprint3_1.product.TicTacToeGame;
-import sprint3_1.product.TicTacToeGame.Cell;
+import sprint3_1.product.SimpleGame;
+import sprint3_1.product.Game.Cell;
 
 public class TestNoughtMoves {
 
-	private TicTacToeGame game;
+	private SimpleGame game;
 
 	@Before
 	public void setUp() throws Exception {
-		game = new TicTacToeGame();
+		game = new SimpleGame();
 		game.makeMove(1, 1);	// CROSS move, then it is NOUGHT's turn
 	}
 

@@ -6,15 +6,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sprint3_1.product.TicTacToeGame;
+import sprint3_1.product.SimpleGame;
 
 public class TestUpdateGameMode {
 	
-	private TicTacToeGame game;
+	private SimpleGame game;
 
 	@Before
 	public void setUp() throws Exception {
-		game = new TicTacToeGame();
+		game = new SimpleGame();
 	}
 
 	@After
